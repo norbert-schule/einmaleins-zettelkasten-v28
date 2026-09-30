@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Einmaleins">
-<title>Einmaleins-Zettelkasten V27</title>
+<title>Einmaleins-Zettelkasten V29</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f4f1e8;color:#24303a;font-family:system-ui,-apple-system,sans-serif}
 .wrap{max-width:1000px;margin:auto;padding:25px 18px 40px}h1{text-align:center;margin:0 0 8px;font-size:34px}
@@ -29,20 +29,22 @@ button{cursor:pointer;font-weight:600}.primary{background:#24303a;color:white}.c
 @media(max-width:700px){.boxes{grid-template-columns:repeat(3,1fr)}.checks{grid-template-columns:repeat(2,1fr)}.task{font-size:48px}.row{flex-direction:column}}
 
 .equation{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px auto 10px;min-height:88px}.equation .task{margin:0}.answerbox{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-#answerDisplay{height:72px;width:180px;border:2px solid #bcc4ca;border-radius:14px;background:#fafafa;font-size:40px;font-weight:750;text-align:center;padding:10px}
+#answerDisplay{height:88px;width:210px;border:2px solid #bcc4ca;border-radius:14px;background:#fafafa;font-size:64px;font-weight:700;text-align:center;padding:4px 10px;line-height:78px}
 .timer{text-align:center;font-size:22px;font-weight:750;min-height:30px}
 .timerbar{height:8px;background:#e1e4e6;border-radius:99px;overflow:hidden;max-width:470px;margin:5px auto 10px}
 .timerbar span{display:block;height:100%;width:100%;background:#24303a}
-.keypadWrap{max-width:470px;margin:auto;display:flex;align-items:center;gap:8px}.keypad{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.keypadWrap{max-width:470px;margin:-0.5cm auto 0;display:flex;align-items:center;gap:8px}.keypad{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .key{font-size:27px;padding:13px 8px;min-height:58px}
 .key.action{font-size:18px}.key.zero{grid-column:2}.key.ok{background:#24303a;color:#fff}.submitKey{font-size:42px;min-width:105px;min-height:105px;align-self:center}
+.pauseScreen{position:fixed;inset:0;z-index:1000;background:#f4f1e8;display:flex;align-items:center;justify-content:center;padding:24px}.pauseCard{text-align:center;background:white;border-radius:24px;padding:46px 38px;box-shadow:0 8px 25px #00000018;min-width:min(90vw,460px)}.pauseCard .pauseIcon{font-size:64px}.pauseCard h2{font-size:42px;margin:8px 0 12px}.pauseCard p{font-size:20px;color:#66717a;margin:0 0 24px}.pauseCard button{font-size:22px;padding:14px 28px}
 .teacher{background:#fff;border-radius:20px;padding:22px;box-shadow:0 8px 25px #00000012;max-width:1000px;margin:auto}
 .teacherHeader{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .teacherTable{width:100%;border-collapse:collapse;margin-top:15px}
 .teacherTable th,.teacherTable td{border-bottom:1px solid #d9dde0;padding:9px 6px;text-align:left}
 .teacherTable th{font-size:13px;color:#66717a}
 .tActions button{padding:6px 8px;font-size:12px}
-@media(max-width:700px){.equation{gap:8px;justify-content:center}.equation .task{font-size:42px}.answerbox #answerDisplay{width:115px}.keypadWrap{max-width:470px}.submitKey{min-width:105px;min-height:105px}.key{min-height:56px}.teacherTable th:nth-child(2),.teacherTable td:nth-child(2){display:none}}
+@media(max-width:700px){.equation{gap:8px;justify-content:center}.equation .task{font-size:42px}.answerbox #answerDisplay{width:145px;height:68px;font-size:42px;line-height:58px}.keypadWrap{max-width:470px}.submitKey{min-width:105px;min-height:105px}.key{min-height:56px}.teacherTable th:nth-child(2),.teacherTable td:nth-child(2){display:none}}
+@media(max-width:500px){.equation .task{font-size:33px!important}.answerbox #answerDisplay{font-size:33px!important}}
 </style></head>
 <body>
 <div class="wrap">
@@ -70,6 +72,7 @@ button{cursor:pointer;font-weight:600}.primary{background:#24303a;color:white}.c
 <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button>
 <button class="key action" data-key="clear">C</button><button class="key zero" data-key="0">0</button><button class="key action" data-key="back">⌫</button></div><button class="key ok submitKey" data-key="ok" aria-label="Antwort abschicken">✓</button></div>
 </section></div>
+<div id="pauseScreen" class="pauseScreen hidden"><div class="pauseCard"><div class="pauseIcon">⏸️</div><h2>Pause</h2><p>Die Aufgabe wartet auf dich.</p><button id="resumeBtn" class="primary">▶ Weiter</button></div></div>
 
 <section id="teacher" class="teacher hidden">
 <div class="teacherHeader"><h2>👩‍🏫 Lehrerbildschirm</h2><button id="teacherBack">← Schülerbildschirm</button></div>
@@ -161,7 +164,7 @@ function tick(){
 function timeout(){
  if(busy)return;busy=true;paused=false;updatePauseButton();
  $("feedback").innerHTML="";setAnswer(String(card.a*card.b));
- setTimeout(()=>{busy=false;pick()},3000);
+ setTimeout(()=>{busy=false;pick()},2000);
 }
 function pick(){
  if(busy||!currentName)return;
@@ -196,10 +199,10 @@ function submit(){
    card.box=1;card.streak=0;setAnswer(String(correct));$("feedback").innerHTML="";
  }
  save();renderTeacher();
- setTimeout(()=>{busy=false;if(all6())showDiploma();else pick()},3000);
+ setTimeout(()=>{busy=false;if(all6())showDiploma();else pick()},2000);
 }
 document.querySelectorAll(".key,.answerSubmit").forEach(b=>b.onclick=()=>{
- if(busy)return;let k=b.dataset.key;
+ if(busy||paused)return;let k=b.dataset.key;
  if(k==="ok")submit();
  else if(k==="clear")setAnswer("");
  else if(k==="back")setAnswer(answer.slice(0,-1));
@@ -211,6 +214,7 @@ function updatePauseButton(){
  if(!b)return;
  b.textContent=paused?"▶ Weiter":"⏸ Pause";
  b.classList.toggle("paused",paused);
+ $("pauseScreen").classList.toggle("hidden",!paused);
 }
 $("pauseBtn").onclick=()=>{
  if(busy||!card)return;
@@ -222,10 +226,14 @@ $("pauseBtn").onclick=()=>{
  }
  updatePauseButton();
 };
+$("resumeBtn").onclick=()=>{
+ if(!paused)return;
+ paused=false;startTime=performance.now();timerId=setInterval(tick,50);tick();updatePauseButton();
+};
 
 // Normale Computertastatur zusätzlich zur Bildschirm-Tastatur erlauben.
 document.addEventListener("keydown",e=>{
- if($("game").classList.contains("hidden")||busy)return;
+ if($("game").classList.contains("hidden")||busy||paused)return;
  if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA")return;
  if(e.key>="0"&&e.key<="9"){e.preventDefault();if(answer.length<3)setAnswer(answer+e.key);}
  else if(e.key==="Enter"){e.preventDefault();submit();}
