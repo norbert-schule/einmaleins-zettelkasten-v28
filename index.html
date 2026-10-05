@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="de">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Einmaleins">
-<title>Einmaleins-Zettelkasten V29</title>
+<meta name="apple-mobile-web-app-title" content="Multiplicación">
+<title>Tablas de multiplicar – sistema de fichas V29</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f4f1e8;color:#24303a;font-family:system-ui,-apple-system,sans-serif}
 .wrap{max-width:1000px;margin:auto;padding:25px 18px 40px}h1{text-align:center;margin:0 0 8px;font-size:34px}
@@ -57,19 +57,19 @@ button{cursor:pointer;font-weight:600}.primary{background:#24303a;color:white}.c
 </style></head>
 <body>
 <div class="wrap">
-<h1>🗂️ Einmaleins-Zettelkasten</h1>
-<div class="sub">Jede Aufgabe wandert Schritt für Schritt durch die Fächer.</div>
+<h1>🗂️ Tablas de multiplicar – sistema de fichas</h1>
+<div class="sub">Cada ejercicio avanza paso a paso por los compartimentos.</div>
 
 <section id="start" class="panel">
-<div class="modebuttons"><button id="studentMode" class="primary">👧 Schülerbildschirm</button><button id="teacherMode">👩‍🏫 Lehrerbildschirm</button></div>
-<h2>Wer übt heute?</h2><div id="names" class="names"></div>
-<div class="row"><input id="newName" maxlength="30" placeholder="Name des Kindes"><button id="add" class="primary">Name hinzufügen</button></div>
-<div class="choice"><h3>Welche Einmaleinsreihen möchtest du üben?</h3><div id="checks" class="checks"></div>
-<div class="hint">Du kannst eine oder mehrere Reihen ankreuzen.</div></div>
+<div class="modebuttons"><button id="studentMode" class="primary">👧 Pantalla del alumno</button><button id="teacherMode">👩‍🏫 Pantalla del docente</button></div>
+<h2>¿Quién practica hoy?</h2><div id="names" class="names"></div>
+<div class="row"><input id="newName" maxlength="30" placeholder="Nombre del alumno"><button id="add" class="primary">Agregar nombre</button></div>
+<div class="choice"><h3>¿Qué tablas de multiplicar quieres practicar?</h3><div id="checks" class="checks"></div>
+<div class="hint">Puedes seleccionar una o varias tablas.</div></div>
 </section>
 
 <section id="game" class="game hidden">
-<div class="top"><div id="student" class="student"></div><div><button id="pauseBtn">⏸ Pause</button> <button id="back">← Zurück</button></div></div>
+<div class="top"><div id="student" class="student"></div><div><button id="pauseBtn">⏸ Pausa</button> <button id="back">← Volver</button></div></div>
 <div id="selectedInfo" class="hint"></div>
 <div class="practiceLayout"><div class="practiceMain"><div class="equation"><div id="task" class="task"></div><div class="answerbox"><div id="answerDisplay"></div></div></div>
 <div id="timer" class="timer" aria-hidden="true"></div>
@@ -79,27 +79,27 @@ button{cursor:pointer;font-weight:600}.primary{background:#24303a;color:white}.c
 <button class="key" data-key="1">1</button><button class="key" data-key="2">2</button><button class="key" data-key="3">3</button>
 <button class="key" data-key="4">4</button><button class="key" data-key="5">5</button><button class="key" data-key="6">6</button>
 <button class="key" data-key="7">7</button><button class="key" data-key="8">8</button><button class="key" data-key="9">9</button>
-<button class="key action" data-key="clear">C</button><button class="key zero" data-key="0">0</button><button class="key action" data-key="back">⌫</button></div><button class="key ok submitKey" data-key="ok" aria-label="Antwort abschicken">✓</button></div></div><aside aria-label="Dein Fortschritt"><div id="starColumn" class="starColumn" role="img"></div><div id="starMessage" class="starMessage" role="status"></div></aside></div>
+<button class="key action" data-key="clear">C</button><button class="key zero" data-key="0">0</button><button class="key action" data-key="back">⌫</button></div><button class="key ok submitKey" data-key="ok" aria-label="Enviar respuesta">✓</button></div></div><aside aria-label="Tu progreso"><div id="starColumn" class="starColumn" role="img"></div><div id="starMessage" class="starMessage" role="status"></div></aside></div>
 </section></div>
-<div id="pauseScreen" class="pauseScreen hidden"><div class="pauseCard"><div class="pauseIcon">⏸️</div><h2>Pause</h2><p>Die Aufgabe wartet auf dich.</p><button id="resumeBtn" class="primary">▶ Weiter</button></div></div>
+<div id="pauseScreen" class="pauseScreen hidden"><div class="pauseCard"><div class="pauseIcon">⏸️</div><h2>Pausa</h2><p>El ejercicio te espera.</p><button id="resumeBtn" class="primary">▶ Continuar</button></div></div>
 
 <section id="teacher" class="teacher hidden">
-<div class="teacherHeader"><h2>👩‍🏫 Lehrerbildschirm</h2><button id="teacherBack">← Schülerbildschirm</button></div>
-<div class="hint">Hier sieht die Lehrkraft die Lernstände und die sechs Fächer. Im Schülerbildschirm werden die Fächer nicht angezeigt.</div>
+<div class="teacherHeader"><h2>👩‍🏫 Pantalla del docente</h2><button id="teacherBack">← Pantalla del alumno</button></div>
+<div class="hint">Aquí el docente puede ver el progreso y los seis compartimentos. Estos no se muestran en la pantalla del alumno.</div>
 <div style="text-align:center;margin:12px 0">
-<button id="export">💾 Lernstände sichern</button>
-<button id="clearAll">⚠️ Alle Lernstände löschen</button>
-<button id="changePassword">🔑 Passwort ändern</button>
+<button id="export">💾 Guardar copia del progreso</button>
+<button id="clearAll">⚠️ Borrar todo el progreso</button>
+<button id="changePassword">🔑 Cambiar contraseña</button>
 </div>
 <div style="overflow:auto"><table class="teacherTable">
-<thead><tr><th>Kind</th><th>Reihen</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>F5</th><th>⭐F6</th><th></th></tr></thead>
+<thead><tr><th>Alumno</th><th>Tablas</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>F5</th><th>⭐F6</th><th></th></tr></thead>
 <tbody id="teacherRows"></tbody>
 </table></div>
 </section>
-<div id="overlay" class="overlay hidden"><div class="diploma"><div style="font-size:48px">🏆</div><h2>Diplom</h2><div id="dname" class="dname"></div><div class="king">Du bist jetzt ein <strong>Einmaleinskönig!</strong> 👑</div><p>Du hast alle ausgewählten Einmaleinsreihen gelernt.</p><div class="actions"><button id="print" class="primary">🖨️ Diplom ausdrucken</button><button id="close">Weiter üben</button></div></div></div>
+<div id="overlay" class="overlay hidden"><div class="diploma"><div style="font-size:48px">🏆</div><h2>Diploma</h2><div id="dname" class="dname"></div><div class="king">¡Ahora eres <strong>una estrella de las tablas de multiplicar!</strong> 👑</div><p>Has aprendido todas las tablas de multiplicar seleccionadas.</p><div class="actions"><button id="print" class="primary">🖨️ Imprimir diploma</button><button id="close">Seguir practicando</button></div></div></div>
 
 <script>
-const V5KEY="einmaleinsZettelkastenV5", KEY="einmaleinsZettelkastenV6";
+const V5KEY="einmaleinsZettelkastenV5_es", KEY="einmaleinsZettelkastenV6_es";
 let migrated=JSON.parse(localStorage.getItem(KEY)||"null");
 if(!migrated){
   let old=JSON.parse(localStorage.getItem(V5KEY)||'{"students":{}}');
@@ -112,7 +112,7 @@ if(!migrated){
   localStorage.setItem(KEY,JSON.stringify(migrated));
 }
 const data=migrated;
-const PASSKEY="einmaleinsTeacherPassword";
+const PASSKEY="einmaleinsTeacherPassword_es";
 let currentName="",card=null,busy=false,timerId=null,answer="",lastCardKey="",paused=false,remainingMs=15000;
 const $=id=>document.getElementById(id);
 
@@ -128,7 +128,7 @@ function updateStars(){
  s.starProgress[mode]=count;
  const column=$("starColumn");column.replaceChildren();
  for(let i=0;i<10;i++){const star=document.createElement("span");star.className="progressStar"+(i<count?" earned":"");star.textContent=i<count?"★":"☆";star.setAttribute("aria-hidden","true");column.append(star)}
- column.setAttribute("aria-label",count+" von 10 Sternen erreicht");$("starMessage").textContent=count===10?"Super!":"";
+ column.setAttribute("aria-label",count+" de 10 estrellas conseguidas");$("starMessage").textContent=count===10?"Super!":"";
 }
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
 function makeCards(rows){
@@ -143,25 +143,25 @@ function getStudent(n){
 }
 function renderChecks(){
   $("checks").innerHTML="";
-  for(let i=1;i<=12;i++){let l=document.createElement("label");l.className="check";l.innerHTML=`<input type="checkbox" value="${i}"> ${i}er-Reihe`;$("checks").appendChild(l)}
+  for(let i=1;i<=12;i++){let l=document.createElement("label");l.className="check";l.innerHTML=`<input type="checkbox" value="${i}"> Tabla del ${i}`;$("checks").appendChild(l)}
 }
 function setChecks(rows){document.querySelectorAll("#checks input").forEach(x=>x.checked=rows.includes(+x.value))}
 function selectedRows(){return [...document.querySelectorAll("#checks input:checked")].map(x=>+x.value)}
 function names(){
   $("names").innerHTML="";let ks=Object.keys(data.students);
-  if(!ks.length){$("names").innerHTML='<div class="hint">Noch keine Namen eingetragen.</div>';return}
+  if(!ks.length){$("names").innerHTML='<div class="hint">Todavía no hay alumnos registrados.</div>';return}
   ks.forEach(n=>{let b=document.createElement("button");b.className="name";b.textContent="👤 "+n;b.onclick=()=>prepare(n);$("names").appendChild(b)})
 }
-function prepare(n){currentName=n;setChecks(getStudent(n).rows||[1,2,3,4,5,6,7,8,9,10,11,12]);$("newName").value="";$("add").textContent="Auswahl übernehmen"}
+function prepare(n){currentName=n;setChecks(getStudent(n).rows||[1,2,3,4,5,6,7,8,9,10,11,12]);$("newName").value="";$("add").textContent="Aplicar selección"}
 function start(){
   let rows=selectedRows();
   if(!currentName){let n=$("newName").value.trim();if(!n)return;currentName=n;if(!data.students[n])data.students[n]={rows:[],cards:[]}}
-  if(!rows.length){alert("Bitte mindestens eine Einmaleinsreihe auswählen.");return}
+  if(!rows.length){alert("Selecciona al menos una tabla de multiplicar.");return}
   let s=getStudent(currentName),old=(s.cards||[]).filter(c=>Number(c.a)>=1&&Number(c.a)<=10&&Number(c.b)>=1&&Number(c.b)<=12),map=new Map(old.map(c=>[c.a+"·"+c.b,c]));
   rows.forEach(reihe=>{for(let zahl=1;zahl<=10;zahl++){let k=zahl+"·"+reihe;if(!map.has(k))map.set(k,{a:zahl,b:reihe,box:1,streak:0})}});
   s.cards=[...map.values()];s.rows=rows;updateStars();save();
-  $("student").textContent="👤 "+currentName;$("selectedInfo").textContent="Geübt werden: "+rows.map(x=>x+". Reihe").join(", ");
-  $("start").classList.add("hidden");$("game").classList.remove("hidden");$("add").textContent="Name hinzufügen";renderTeacher();pick()
+  $("student").textContent="👤 "+currentName;$("selectedInfo").textContent="Tablas para practicar: "+rows.map(x=>x+". tabla").join(", ");
+  $("start").classList.add("hidden");$("game").classList.remove("hidden");$("add").textContent="Agregar nombre";renderTeacher();pick()
 }
 function renderTeacher(){
  let tb=$("teacherRows"); if(!tb)return; tb.innerHTML="";
@@ -170,11 +170,11 @@ function renderTeacher(){
   let tr=document.createElement("tr");
   tr.innerHTML="<td><strong>"+n+"</strong></td><td>"+(rows.length?rows.join(", "):"–")+"</td>"+
    [1,2,3,4,5,6].map(i=>"<td>"+cs.filter(c=>c.box===i).length+"</td>").join("")+
-   "<td class='tActions'><button data-open='"+encodeURIComponent(n)+"'>Öffnen</button> <button data-del='"+encodeURIComponent(n)+"'>Löschen</button></td>";
+   "<td class='tActions'><button data-open='"+encodeURIComponent(n)+"'>Abrir</button> <button data-del='"+encodeURIComponent(n)+"'>Borrar</button></td>";
   tb.appendChild(tr);
  });
  tb.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{let n=decodeURIComponent(b.dataset.open);prepare(n);$("teacher").classList.add("hidden");$("start").classList.remove("hidden")});
- tb.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{let n=decodeURIComponent(b.dataset.del);if(confirm("Lernstand von "+n+" löschen?")){delete data.students[n];save();renderTeacher();names()}});
+ tb.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{let n=decodeURIComponent(b.dataset.del);if(confirm("Progreso de "+n+" — ¿borrar?")){delete data.students[n];save();renderTeacher();names()}});
 }
 function updateTeacher(){renderTeacher()}
 function setAnswer(v){answer=v;$("answerDisplay").textContent=answer}
@@ -236,7 +236,7 @@ document.querySelectorAll(".key,.answerSubmit").forEach(b=>b.onclick=()=>{
 function updatePauseButton(){
  const b=$("pauseBtn");
  if(!b)return;
- b.textContent=paused?"▶ Weiter":"⏸ Pause";
+ b.textContent=paused?"▶ Continuar":"⏸ Pausa";
  b.classList.toggle("paused",paused);
  $("pauseScreen").classList.toggle("hidden",!paused);
 }
@@ -274,27 +274,27 @@ $("add").onclick=()=>{
   if(currentName) start();
 };
 $("newName").onkeydown=e=>{if(e.key==="Enter")$("add").click()};
-$("back").onclick=()=>{clearInterval(timerId);busy=false;card=null;currentName="";paused=false;remainingMs=15000;updatePauseButton();$("game").classList.add("hidden");$("start").classList.remove("hidden");$("add").textContent="Name hinzufügen";names()};
+$("back").onclick=()=>{clearInterval(timerId);busy=false;card=null;currentName="";paused=false;remainingMs=15000;updatePauseButton();$("game").classList.add("hidden");$("start").classList.remove("hidden");$("add").textContent="Agregar nombre";names()};
 $("studentMode").onclick=()=>{$("teacher").classList.add("hidden");$("game").classList.add("hidden");$("start").classList.remove("hidden");names()};
 $("teacherMode").onclick=()=>{
   const stored=localStorage.getItem(PASSKEY)||"4711";
-  const entered=prompt("Lehrerbereich – Passwort eingeben:");
+  const entered=prompt("Área del docente: introduce la contraseña:");
   if(entered===stored){$("start").classList.add("hidden");$("game").classList.add("hidden");$("teacher").classList.remove("hidden");renderTeacher();}
-  else if(entered!==null){alert("Passwort nicht korrekt.");}
+  else if(entered!==null){alert("La contraseña no es correcta.");}
 };
 $("changePassword").onclick=()=>{
   const old=localStorage.getItem(PASSKEY)||"4711";
-  const current=prompt("Aktuelles Lehrerpasswort eingeben:");
-  if(current!==old){if(current!==null)alert("Passwort nicht korrekt.");return;}
-  const next=prompt("Neues Lehrerpasswort eingeben:");
+  const current=prompt("Introduce la contraseña actual del docente:");
+  if(current!==old){if(current!==null)alert("La contraseña no es correcta.");return;}
+  const next=prompt("Introduce la nueva contraseña del docente:");
   if(next===null)return;
-  if(next.trim().length<4){alert("Das Passwort muss mindestens 4 Zeichen haben.");return;}
+  if(next.trim().length<4){alert("La contraseña debe tener al menos 4 caracteres.");return;}
   localStorage.setItem(PASSKEY,next.trim());
-  alert("Das Lehrerpasswort wurde geändert.");
+  alert("Se cambió la contraseña del docente.");
 };
 $("teacherBack").onclick=()=>{$("teacher").classList.add("hidden");$("start").classList.remove("hidden");names()};
-$("clearAll").onclick=()=>{if(confirm("Wirklich ALLE Lernstände löschen?")){data={students:{}};save();renderTeacher();names()}};
-$("export").onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="einmaleins-lernstaende.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("clearAll").onclick=()=>{if(confirm("¿Seguro que quieres borrar TODO el progreso guardado?")){data={students:{}};save();renderTeacher();names()}};
+$("export").onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="multiplicacion-progreso.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("print").onclick=()=>window.print();$("close").onclick=()=>$("overlay").classList.add("hidden");
 renderChecks();names();
 </script></body></html>
